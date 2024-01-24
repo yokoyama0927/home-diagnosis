@@ -1,0 +1,490 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>減額診断フォーム</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            rossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css"
+        />
+    </head>
+
+    <script type="text/css"></script>
+
+    <body>
+        <div class="mt-3">
+            <h3 class="text-center title">初期費用の減額診断フォーム</h3>
+            <p class="text-center">お客様の現在の情報をご入力ください。</p>
+            <form class="w-75 mx-auto">
+                <p class="mt-4 mb-1">
+                    家賃の金額（例：75000円）
+                    <span class="badge badge-danger ml-1"> 必須 </span>
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="houseMoney"
+                        class="form-control w-75 mt-1"
+                        required
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+                <p class="mt-3 mb-1">
+                    管理費・共益費の金額（0円の場合0と記入）
+                    <span class="badge badge-danger"> 必須 </span>
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="maintenanceMoney"
+                        class="form-control w-75 mt-1"
+                        required
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+                <p class="mt-3 mb-1">
+                    敷金
+                    <span class="badge badge-danger ml-1"> 必須 </span>
+                </p>
+                <div>
+                    <select name="deposit" onchange="onchangeDepositDisplay()">
+                        <option value="0ヶ月">0ヶ月</option>
+                        <option value="0.5ヶ月">0.5ヶ月</option>
+                        <option value="1ヶ月">1ヶ月</option>
+                        <option value="1.5ヶ月">1.5ヶ月</option>
+                        <option value="2ヶ月">2ヶ月</option>
+                        <option value="3ヶ月">3ヶ月</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <div
+                        id="depositOthertInput"
+                        class="form-inline"
+                        style="display: none"
+                    >
+                        <input
+                            id="depositOtherValue"
+                            type="number"
+                            name="depositOther"
+                            class="form-control w-75 mt-1"
+                            value=""
+                            placeholder="こちらに敷金をご入力ください。"
+                        /><label>&nbsp;円</label>
+                    </div>
+                </div>
+
+                <p class="mt-3 mb-1">
+                    礼金
+                    <span class="badge badge-danger ml-1"> 必須 </span>
+                </p>
+                <div>
+                    <select
+                        name="keyMoney"
+                        onchange="onchangeKeyMoneyDisplay()"
+                    >
+                        <option value="0ヶ月">0ヶ月</option>
+                        <option value="0.5ヶ月">0.5ヶ月</option>
+                        <option value="1ヶ月">1ヶ月</option>
+                        <option value="1.5ヶ月">1.5ヶ月</option>
+                        <option value="2ヶ月">2ヶ月</option>
+                        <option value="3ヶ月">3ヶ月</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <div
+                        id="keyMoneyOthertInput"
+                        class="form-inline"
+                        style="display: none"
+                    >
+                        <input
+                            id="keyMoneyOtherValue"
+                            type="number"
+                            name="keyMoneyOther"
+                            class="form-control w-75 mt-1"
+                            value=""
+                            placeholder="こちらに礼金をご入力ください。"
+                        /><label>&nbsp;円</label>
+                    </div>
+                </div>
+                <p class="mt-3 mb-1">
+                    保証金
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <div>
+                    <select
+                        name="securityDeposit"
+                        onchange="onchangeSecurityDepositDisplay()"
+                    >
+                        <option value="0ヶ月">0ヶ月</option>
+                        <option value="0.5ヶ月">0.5ヶ月</option>
+                        <option value="1ヶ月">1ヶ月</option>
+                        <option value="1.5ヶ月">1.5ヶ月</option>
+                        <option value="2ヶ月">2ヶ月</option>
+                        <option value="3ヶ月">3ヶ月</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <div
+                        id="securityDepositOthertInput"
+                        class="form-inline"
+                        style="display: none"
+                    >
+                        <input
+                            id="securityDepositOtherValue"
+                            type="number"
+                            name="securityDepositOther"
+                            class="form-control w-75 mt-1"
+                            value=""
+                            placeholder="こちらに保証金をご入力ください。"
+                        /><label>&nbsp;円</label>
+                    </div>
+                </div>
+                <p class="mt-4 mb-1">
+                    仲介手数料の金額
+                    <span class="badge badge-danger ml-1"> 必須 </span>
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="brokerageMoney"
+                        class="form-control w-75 mt-1"
+                        required
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+                <p class="mt-4 mb-1">
+                    火災保険の金額
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <p class="mb-1" style="font-size: 14px">
+                    家財保険、火災保険、保険料などと記載されていることが多いです。
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="fireInsurance"
+                        class="form-control w-75 mt-1"
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+
+                <p class="mt-4 mb-1">
+                    保証会社の保証料
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <p class="mb-1" style="font-size: 14px">
+                    保証会社の保証料と記載されることが多いです。金額は一般的に家賃と管理費の30%~100%程度の価格帯です。
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="guaranteeMoney"
+                        class="form-control w-75 mt-1"
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+
+                <p class="mt-4 mb-1">
+                    鍵交換費用
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="lockExchangeMoney"
+                        class="form-control w-75 mt-1"
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+
+                <p class="mt-4 mb-1">
+                    24時間サポートの金額（安心サポート、クラシード等）
+                    <span class="badge badge-secondary"> 任意 </span>
+                </p>
+                <p class="mb-1" style="font-size: 14px">
+                    24時間サポートなど金額1万円〜2万円前後のサービスです。
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="supportMoney"
+                        class="form-control w-75 mt-1"
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+
+                <p class="mt-4 mb-1">
+                    書類作成費用
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <div class="form-inline">
+                    <input
+                        type="number"
+                        name="documentationMoney"
+                        class="form-control w-75 mt-1"
+                    />
+                    <label>&nbsp;円</label>
+                </div>
+
+                <p class="mt-4 mb-1">
+                    その他費用
+                    <span class="badge badge-secondary ml-1"> 任意 </span>
+                </p>
+                <p class="mb-1" style="font-size: 14px">
+                    マイコンシェルクラブ、消毒費用、除菌抗菌などがあれば金額を記入してください。
+                </p>
+                <div class="form-inline">
+                    <textarea
+                        name="otherMessage"
+                        placeholder="マイコンシェルクラブ：10000円, 消毒費用：2000円　等"
+                        class="w-100 form-control"
+                        rows="5"
+                    ></textarea>
+                </div>
+
+                <input
+                    type="submit"
+                    class="mt-4 btn btn-primary d-block mx-auto"
+                    value="送信する"
+                />
+            </form>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            charset="utf-8"
+            src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"
+        ></script>
+        <script>
+            $(document).ready(function () {
+                const liffId = "2002787071-LreQaJZE";
+                initializeLiff(liffId);
+            });
+
+            function initializeLiff(liffId) {
+                liff.init({
+                    liffId: liffId,
+                })
+                    .then(() => {
+                        initializeApp();
+                    })
+                    .catch((err) => {
+                        console.log("LIFF Initialization failed ", err);
+                    });
+            }
+
+            function sendText(text) {
+                const waitMessage =
+                    "減額診断には，数分かかることがございます。\nそのまま，お待ちください。\n10分以上応答がない場合は，恐れ入りますが，もう一度減額診断フォームをご入力いただくか，直接管理者に連絡ください。";
+                liff.sendMessages([
+                    {
+                        type: "text",
+                        text: text,
+                    },
+                    {
+                        type: "text",
+                        text: waitMessage,
+                    },
+                ])
+                    .then(function () {
+                        liff.closeWindow();
+                    })
+                    .catch(function (error) {
+                        window.alert("Failed to send message " + error);
+                    });
+            }
+
+            const params = new URL(document.location).searchParams;
+            const key = params.get("key");
+
+            $(function () {
+                $("form").submit(function () {
+                    // 送信メッセージ
+                    let message = "【減額診断ご入力内容】";
+
+                    const houseMoney =
+                        "\n家賃の金額：" +
+                        $('input[name="houseMoney"]').val() +
+                        "円";
+                    message += houseMoney;
+
+                    const maintenanceMoney =
+                        "\n管理費・共益費の金額：" +
+                        $('input[name="maintenanceMoney"]').val() +
+                        "円";
+                    message += maintenanceMoney;
+
+                    let deposit = "\n敷金：";
+                    // ラジオボタンの場合
+                    // if ($('input[name="deposit"]:checked').val() === "その他") {
+                    //     deposit += $('input[name="depositOther"]').val() + "円";
+                    // } else {
+                    //     deposit += $('input[name="deposit"]:checked').val();
+                    // }
+
+                    // コンボボックス（セレクトボックス）の場合
+                    if (
+                        $("[name = deposit] option:selected").val() === "その他"
+                    ) {
+                        deposit += $('input[name="depositOther"]').val() + "円";
+                    } else {
+                        deposit += $("[name = deposit] option:selected").val();
+                    }
+                    message += deposit;
+
+                    let keyMoney = "\n礼金：";
+                    // コンボボックス（セレクトボックス）の場合
+                    if (
+                        $("[name = keyMoney] option:selected").val() ===
+                        "その他"
+                    ) {
+                        keyMoney +=
+                            $('input[name="keyMoneyOther"]').val() + "円";
+                    } else {
+                        keyMoney += $(
+                            "[name = keyMoney] option:selected"
+                        ).val();
+                    }
+                    message += keyMoney;
+
+                    let securityDeposit = "\n保証金：";
+                    // コンボボックス（セレクトボックス）の場合
+                    if (
+                        $("[name = securityDeposit] option:selected").val() ===
+                        "その他"
+                    ) {
+                        securityDeposit +=
+                            $('input[name="securityDepositOther"]').val() +
+                            "円";
+                    } else {
+                        securityDeposit += $(
+                            "[name = securityDeposit] option:selected"
+                        ).val();
+                    }
+                    message += securityDeposit;
+
+                    if ($('input[name="brokerageMoney"]').val()) {
+                        const brokerageMoney =
+                            "\n仲介手数料の金額：" +
+                            $('input[name="brokerageMoney"]').val() +
+                            "円";
+                        message += brokerageMoney;
+                    }
+
+                    if ($('input[name="fireInsurance"]').val()) {
+                        const fireInsurance =
+                            "\n火災保険の金額：" +
+                            $('input[name="fireInsurance"]').val() +
+                            "円";
+                        message += fireInsurance;
+                    }
+
+                    if ($('input[name="guaranteeMoney"]').val()) {
+                        const guaranteeMoney =
+                            "\n保証会社の保証料：" +
+                            $('input[name="guaranteeMoney"]').val() +
+                            "円";
+                        message += guaranteeMoney;
+                    }
+
+                    if ($('input[name="lockExchangeMoney"]').val()) {
+                        const lockExchangeMoney =
+                            "\n鍵交換費用：" +
+                            $('input[name="lockExchangeMoney"]').val() +
+                            "円";
+                        message += lockExchangeMoney;
+                    }
+
+                    if ($('input[name="supportMoney"]').val()) {
+                        const supportMoney =
+                            "\n24時間サポートの金額：" +
+                            $('input[name="supportMoney"]').val() +
+                            "円";
+                        message += supportMoney;
+                    }
+
+                    if ($('input[name="documentationMoney"]').val()) {
+                        const documentationMoney =
+                            "\n書類作成費用：" +
+                            $('input[name="documentationMoney"]').val() +
+                            "円";
+                        message += documentationMoney;
+                    }
+
+                    if ($('textarea[name="otherMessage"]').val()) {
+                        const otherMessage =
+                            "\nその他費用：" +
+                            $('textarea[name="otherMessage"]').val();
+                        message += otherMessage;
+                    }
+
+                    sendText(message);
+                    return false;
+                });
+            });
+
+            // 敷金：その他にチェックが入ったらテキストボックスを入力可能にする
+            // const changeDepositDisabled = () => {
+            //     if (document.getElementById("depositOther").checked) {
+            //         document
+            //             .getElementById("depositOtherValue")
+            //             .removeAttribute("disabled");
+            //     } else {
+            //         document
+            //             .getElementById("depositOtherValue")
+            //             .setAttribute("disabled", true);
+            //     }
+            // };
+
+            // 敷金をコンボボックスで実装する場合
+            const onchangeDepositDisplay = () => {
+                const depositValue = $(
+                    "[name = deposit] option:selected"
+                ).val();
+                depositValue === "その他"
+                    ? $("#depositOthertInput").css("display", "flex") &
+                      $("#depositOtherValue").attr("required", true)
+                    : $("#depositOthertInput").css("display", "none") &
+                      $("#depositOtherValue").attr("required", false);
+            };
+
+            // 礼金をコンボボックスで実装する場合
+            const onchangeKeyMoneyDisplay = () => {
+                const keyMoneyValue = $(
+                    "[name = keyMoney] option:selected"
+                ).val();
+                keyMoneyValue === "その他"
+                    ? $("#keyMoneyOthertInput").css("display", "flex") &
+                      $("#keyMoneyOtherValue").attr("required", true)
+                    : $("#keyMoneyOthertInput").css("display", "none") &
+                      $("#keyMoneyOtherValue").attr("required", false);
+            };
+
+            // 保証金をコンボボックスで実装する場合
+            const onchangeSecurityDepositDisplay = () => {
+                const securityDepositValue = $(
+                    "[name = securityDeposit ] option:selected"
+                ).val();
+                securityDepositValue === "その他"
+                    ? $("#securityDepositOthertInput").css("display", "flex")
+                    : $("#securityDepositOthertInput").css("display", "none");
+            };
+        </script>
+    </body>
+</html>
